@@ -1,8 +1,9 @@
 class BooksController < ApplicationController
   before_action :set_book, only: [:show, :edit, :update, :destroy]
+  before_action :set_books, only: [:index, :create]
 
   def index
-    @books = Book.all
+
     @book = Book.new
   end
 
@@ -14,6 +15,7 @@ class BooksController < ApplicationController
     if @book.save
       redirect_to book_path(@book), notice: "successfully created book!"
     else
+    
       render 'index'
     end
   end
@@ -22,7 +24,7 @@ class BooksController < ApplicationController
   end
 
   def update
-    if @book.update()
+    if @book.update(book_params)
       redirect_to book_path(@book), notice: "successfully updated book!"
     else
       render 'edit'
@@ -38,6 +40,10 @@ class BooksController < ApplicationController
 
   def set_book
     @book = Book.find(params[:id])
+  end
+
+  def set_books
+    @books = Book.all
   end
 
   def book_params
